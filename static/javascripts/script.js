@@ -1,40 +1,24 @@
 (function ($, undefined) {
   var featured = [],
-    exclude = ['jteijema.github.io'],
-    customRepos = [
-      {
-      name : 'APPUiO Documentation',
-      html_url : 'https://github.com/appuio/docs',
-      language : 'OpenShift',
-      description : 'Documentation about APPUiO - Swiss Container Platform'
-    }],
+    exclude = [],
     categories = {
-      'Puppet Modules': {
-        'puppet-gitlab': null,
-        'puppet-identity': null,
-        'puppet-burp': null,
-        'puppet-prosody': null,
-        'uhosting': null
+      'ASReview': {
+        'asreview': null,
+        'asreview-plugin-model-cnn-17-layer': null,
+        'asreview-study-model-switching': null,
+        'template-extension-new-dataset': null,
+        'template-extension-new-model': null,
+        'asreview-visualization': null,
+        'asreview-XGBoost': null,
+        'asreview-artwork': null,
+        'asreview-wordcloud': null,
+        'asreview-plugin-wide-doc2vec': null,
+        'asreview-plugin-model-switcher': null
       },
-      'Puppet Tools': {
-        'crmngr': null,
-        'crmngr-debian': null,
-        'docker-puppetci': null
-      },
-      'OpenShift': {
-      },
-      'Docker': {
-        'puppet-in-docker': null
-      },
-      'Monitoring': {
-        'tikapy': null,
-        'tikapy-icinga': null,
-        'tikapy-debian': null,
-        'icingaweb2-module-grafana': null,
-        'icingaweb2-module-grafana-debian': null,
-        'simple_icinga_plugin': null,
-        'pagerduty-icinga-debian': null,
-        'pyrabbit-debian': null
+      'Websites': {
+        'Teije.ma': null,
+        'jteijema.github.io': null,
+        'EU-Alternative': null
       },
       'Other': {
       },
