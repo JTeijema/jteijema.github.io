@@ -93,7 +93,7 @@
   function addRepos(repos, page) {
     repos = repos || [];
     page = page || 1;
-    var uri = 'https://api.github.com/orgs/jteijema/repos?callback=?' + '&per_page=100&type=source' + '&page='+page;
+    var uri = 'https://api.github.com/users/jteijema/repos?callback=?' + '&per_page=100&type=source' + '&page='+page;
 
     $.getJSON(uri, function (result) {
       // API Rate limiting catch
@@ -169,19 +169,19 @@
     $item.appendTo('#members');
   }
 
-  function addMembers(){
-    $.getJSON('https://api.github.com/orgs/jteijema/members?callback=?', function (result) {
-      // API Rate limiting catch
-      if( result.data && result.data.message ){ return; }
+  // function addMembers(){
+  //   $.getJSON('https://api.github.com/users/jteijema/members?callback=?', function (result) {
+  //     // API Rate limiting catch
+  //     if( result.data && result.data.message ){ return; }
 
-      var members = result.data;
-      $('#member-count').text(members.length).removeClass('loading');
-      $.each( members, function(idx, member){ addMember( member ); });
-    });
-  }
+  //     var members = result.data;
+  //     $('#member-count').text(members.length).removeClass('loading');
+  //     $.each( members, function(idx, member){ addMember( member ); });
+  //   });
+  // }
 
   addRepos(customRepos);
-  addMembers();
+  // addMembers();
 
   $('#activate-mobile-menu').on('click', function( evt ){
     evt.preventDefault();
