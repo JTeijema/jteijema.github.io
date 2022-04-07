@@ -1,7 +1,8 @@
 (function ($, undefined) {
   var featured = [],
     exclude = ['jteijema.github.io'],
-    customRepos = [{
+    customRepos = [
+      {
       name : 'APPUiO Documentation',
       html_url : 'https://github.com/appuio/docs',
       language : 'OpenShift',
@@ -91,83 +92,69 @@
   }
 
   function addRepos(repos, page) {
-    repos = repos || [];
-    page = page || 1;
-    var uri = 'https://api.github.com/users/jteijema/repos?callback=?' + '&per_page=100&type=source' + '&page='+page;
+    repos = [];
+    var uri = 'https://api.github.com/users/jteijema/repos';
 
     $.getJSON(uri, function (result) {
-      // API Rate limiting catch
-      if( result.data && result.data.message ){
-        $('<p class="text-error">')
-          .text('Your IP has hit github\'s rate limit per hour.')
-          .appendTo('.hero-block');
-        return;
-      }
 
-      repos = repos.concat(result.data);
-      if( result.data && result.data.length == 100 ){
-        addRepos(repos, page + 1);
-      }else{
-        //
-        repos = $.grep(repos, function(value) {
-          var keep = exclude.indexOf(value.name) === -1,
-            found = false;
+      repos = $.grep(result.data, function(value) {
+        var keep = exclude.indexOf(value.name) === -1,
+          found = false;
 
-          // Build up the categories while we're looping through
-          if( keep ){
-            $.each(categories, function(key, items){
-              if( value.name in items ){
-                found = true;
-                items[value.name] = value;
-                return false;
-              }else if( value.language == key ){
-                found = true;
-                categories[key][value.name] = value;
-              }
-            });
-
-            if( !found ){
-              categories.Other[value.name] = value;
+        // Build up the categories while we're looping through
+        if( keep ){
+          $.each(categories, function(key, items){
+            if( value.name in items ){
+              found = true;
+              items[value.name] = value;
+              return false;
+            }else if( value.language == key ){
+              found = true;
+              categories[key][value.name] = value;
             }
+          });
+
+          if( !found ){
+            categories.Other[value.name] = value;
           }
+        }
 
-          return keep;
-        });
+        return keep;
+      });
 
-        $('#repo-headline').hide();//text(repos.length).removeClass('loading');
-        // Convert pushed_at to Date.
-        $.each(repos, function (i, repo) {
-          repo.pushed_at = new Date(repo.pushed_at || null);
-        });
+      $('#repo-headline').hide();//text(repos.length).removeClass('loading');
+      // Convert pushed_at to Date.
+      $.each(repos, function (i, repo) {
+        repo.pushed_at = new Date(repo.pushed_at || null);
+      });
 
-        // Sort by most-recently pushed to.
-        // or is featured
-        repos.sort(function (a, b) {
-          if (a.pushed_at < b.pushed_at) return 1;
-          if (b.pushed_at < a.pushed_at) return -1;
-          return 0;
-        });
+      // Sort by most-recently pushed to.
+      // or is featured
+      repos.sort(function (a, b) {
+        if (a.pushed_at < b.pushed_at) return 1;
+        if (b.pushed_at < a.pushed_at) return -1;
+        return 0;
+      });
 
-        $.each(repos.slice(0, 3), function (i, repo) {
-          addRecentlyUpdatedRepo(repo);
-        });
+      $.each(repos.slice(0, 3), function (i, repo) {
+        addRecentlyUpdatedRepo(repo);
+      });
 
-        $.each(categories, function (cat, repos){
-          addCategory(cat, repos);
-        });
-      }
+      $.each(categories, function (cat, repos){
+        addCategory(cat, repos);
+      });
     });
   }
 
-  function addMember( member ){
-    var $item = $('<div>').addClass('column');
-    var $link = $('<a>').attr('href', member.html_url).appendTo($item);
-    var $deets = $('<div>').addClass('member-info').appendTo($link);
-    $link.addClass('member');
-    $link.prepend($('<img height="90" width="90">').attr('src', member.avatar_url).addClass('member-avatar'));
-    $deets.append( $('<h4 class="user-name">').text(member.login));
-    $item.appendTo('#members');
-  }
+  // function addMember( member ){
+  //   var $item = $('<div>').addClass('column');
+  //   var $link = $('<a>').attr('href', member.html_url).appendTo($item);
+  //   var $deets = $('<div>').addClass('member-info').appendTo($link);
+  //   $link.addClass('member');
+  //   $link.prepend($('<img height="90" width="90">').attr('src', member.avatar_url).addClass('member-avatar'));
+  //   $deets.append( $('<h4 class="user-name">').text(member.login));
+  //   $item.appendTo('#members');
+  // }
 
   // function addMembers(){
   //   $.getJSON('https://api.github.com/users/jteijema/members?callback=?', function (result) {
@@ -180,7 +167,7 @@
   //   });
   // }
 
-  addRepos(customRepos);
+  addRepos();
   // addMembers();
 
   $('#activate-mobile-menu').on('click', function( evt ){
