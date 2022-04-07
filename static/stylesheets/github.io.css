@@ -1827,7 +1827,6 @@ input[type="submit"].btn {
     display: block
 }
 .logo {
-    background: url('../assets/TEIJEMA.png');
     background-size: 240px 60px;
     display: inline-block;
     overflow: hidden;
@@ -2012,7 +2011,7 @@ input[type="submit"].btn {
 }
 @media screen and (min-width: 66em) {
     .header {
-        text-align: left
+        text-align: center
     }
     .logo-header {
         float: left
