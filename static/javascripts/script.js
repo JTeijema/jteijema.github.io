@@ -1,6 +1,6 @@
 (function ($, undefined) {
   var featured = [],
-    exclude = ['vshn.github.io'],
+    exclude = ['jteijema.github.io'],
     customRepos = [{
       name : 'APPUiO Documentation',
       html_url : 'https://github.com/appuio/docs',
@@ -93,7 +93,7 @@
   function addRepos(repos, page) {
     repos = repos || [];
     page = page || 1;
-    var uri = 'https://api.github.com/orgs/vshn/repos?callback=?' + '&per_page=100&type=source' + '&page='+page;
+    var uri = 'https://api.github.com/orgs/jteijema/repos?callback=?' + '&per_page=100&type=source' + '&page='+page;
 
     $.getJSON(uri, function (result) {
       // API Rate limiting catch
@@ -170,7 +170,7 @@
   }
 
   function addMembers(){
-    $.getJSON('https://api.github.com/orgs/vshn/members?callback=?', function (result) {
+    $.getJSON('https://api.github.com/orgs/jteijema/members?callback=?', function (result) {
       // API Rate limiting catch
       if( result.data && result.data.message ){ return; }
 
